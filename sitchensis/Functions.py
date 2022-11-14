@@ -100,8 +100,11 @@ def refSegType(refs, segNames, heights, segTypes, refType):
     """returns indices of reference segments of refType"""
     
     #strip white space from series
-    for i in range(len(segNames)):
+    # BUG FIX: refs and segNames can have different length
+    for i in range(len(refs)):
         refs.iat[i] = refs.iat[i].replace(' ','')    #This doesn't seem to give the warning. 
+
+    for i in range(len(segNames)):
         segNames.iat[i] = segNames.iat[i].replace(' ','')
         
         #refs.set_value(i, refs.iloc[i].replace(' ',''))  #These give depreciation of set_value warning

@@ -107,8 +107,8 @@ def calculateTree(treeData, custRefs, mapType,  treeName, outDir, intermediateFi
         
         #loop until there are no more values to calculate or until a number of iterations = to rows needing calculating + 1
         # This loop is needed because we there are refs to segments that aren't calculated on the first pass. 
-        while emptyRows > 0 and counter < 10:
-            counter = counter + 1
+        while emptyRows > 0 and counter < 3000:
+            counter += 1
             previousEmptyRows = emptyRows  #This is for the break statement at the end of the loop
             
             #######################################################################
@@ -139,6 +139,11 @@ def calculateTree(treeData, custRefs, mapType,  treeName, outDir, intermediateFi
         
             emptyRows = int(np.isnan(segs.loc[:,['base x', 'base y','top x','top y']]).sum().sum()/2)
             f.print2Log(logFileName,'\nAfter pass {0} there are {1} uncalculated segment base or top locations'.format(counter, emptyRows))
+            nans_found = np.isnan(segs.loc[:,['base x', 'base y','top x','top y']]
+                                  ).sum(axis=1)
+            missing = segs.loc[nans_found > 0]
+            if not missing.empty:
+                print("Missing segment coords:\n", missing['name'].values)
             
             if emptyRows == previousEmptyRows:
                 f.print2Log(logFileName,'\nThere are the same number of empty rows after the last pass, \ncheck to make sure these rows have enough information to calculate them'.format(counter, emptyRows))

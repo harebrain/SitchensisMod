@@ -41,9 +41,10 @@ initErCheck = True
 #### Create output directory ######
 ###################################
 
-if not os.path.exists(workingDir + '/StichensisOutputs'):
-	os.makedirs(workingDir + '/StichensisOutputs')
-outPath =  workingDir + '/StichensisOutputs'
+outPath =  workingDir + '/SitchensisOutputs'
+if not os.path.exists(outPath):
+	os.makedirs(outPath)
+
 
 #################################
 ########  Import data ###########
@@ -103,7 +104,9 @@ impF.excelExport(treeData, outPath, treeName)
 ############ Run Plotting Routine ###########################################
 #############################################################################
 
-scene = vp.canvas(title='Tree: {0}'.format(treeName), width=800, height=800, center=vp.vec(0,0,50), background=vp.color.white, fov = 0.01, range = 60, forward = vp.vec(-1,0,0), up = vp.vec(0,0,1))
+scene = vp.canvas(title='Tree: {0}'.format(treeName), width=800, height=800,
+			   	  center=vp.vec(0,0,3.5), background=vp.color.white, fov = 0.01,
+				  range = 5, forward = vp.vec(-1,0,0), up = vp.vec(0,0,1))
 scene.select()
 
 vp.distant_light(direction = vp.vec(1,1,0.5), color = vp.color.white)
